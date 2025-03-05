@@ -41,21 +41,44 @@ void runCase(int &testCase)
     // cout<<'\n';
     // int x = rnd(1, 100000000000000000);
     // cout << x << " ";
-    // int y = rnd(1, 100000000000000000);
-    // cout << y << "\n";
     int n = rnd(1, 5);
-    n=2*n;
+    // while(n%2!=0) n=rnd(2,10);
     cout << n << "\n";
-    int k = rnd(1, 5);
-    cout << k << "\n";
-
-    vector<int> ans;
-    for(int i=0;i<n;i++)
-    {
-        ans.push_back(rnd(1,10));
-        cout<<ans[i]<<' ';
-    }
-    cout<<'\n';
+    int y = rnd(1, 5);
+    cout << y << "\n";
+    // for(int i=0;i<n;i++)
+    // {
+    //     cout<<(char)('0'+rnd(0,1));
+    // }
+    // cout<<'\n';
+    // int m = rnd(1, 10);
+    // while(m>n) m=rnd(1,10);
+    // cout << m << "\n";
+    // vector<int> ans;
+    // for(int i=0;i<n;i++)
+    // {
+    //     ans.push_back(rnd(-5,5));
+    //     cout<<ans[i]<<' ';
+    // }
+    // cout<<'\n';
+    // vector<int> ans2;
+    // for(int i=0;i<m;i++)
+    // {
+    //     ans2.push_back(rnd(1,5));
+    //     cout<<ans2[i]<<' ';
+    // }
+    // cout<<'\n';
+    // unordered_set<int> ss;
+    // while(ss.size()<n) ss.insert(rnd(1,10));
+    // for(auto &x:ss) cout<<x<<' ';
+    // cout<<'\n';
+    // unordered_set<int> ss2;
+    // while(ss2.size()<m) ss2.insert(rnd(1,10));
+    // for(auto &x:ss2) cout<<x<<' ';
+    // cout<<'\n';
+    // int k = rnd(1, 5);
+    // cout << k << "\n";
+    // cout<<'\n';
     // set<pair<int,int>> ss;
     // while(ss.size()<k)
     // {
@@ -71,14 +94,14 @@ void runCase(int &testCase)
     // {
     //     cout<<x.first<<' '<<x.second<<'\n';
     // }
-    // for(int i=0;i<n;i++)
-    // {
-    //     // cout<<rnd(-100000,100000)<<' ';
-    //     cout<<(char)('0'+rnd(0,1));
-    //     // ans.push_back(rnd(1,10));
-    //     // cout<<rnd(-10,-1)<<' '<<rnd(0,10)<<'\n';
-    // }
-    // cout<<'\n';
+    for(int i=0;i<n;i++)
+    {
+        // cout<<rnd(-100000,100000)<<' ';
+        cout<<(char)('A'+rnd(0,4));
+        // ans.push_back(rnd(1,10));
+        // cout<<rnd(-10,-1)<<' '<<rnd(0,10)<<'\n';
+    }
+    cout<<'\n';
     // sort(ans.begin(),ans.end());
     // for(int i=0;i<n;i++) cout<<ans[i]<<' ';
     // cout<<'\n';

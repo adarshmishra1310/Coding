@@ -7,7 +7,43 @@ using namespace std;
 
 void runCase(int &testcase)
 {
-    
+    int x,y,z,a,b,c;
+    cin>>x>>y>>z>>a>>b>>c;
+    int cnt=0;
+    if(z>=c)
+    {
+        cnt+=c;
+        z-=c;
+    }
+    else
+    {
+        cnt+=z;
+        z=0;
+    }
+    if(z>0) y+=z;
+    if(y>=b)
+    {
+        cnt+=b;
+        y-=b;
+    }
+    else
+    {
+        cnt+=y;
+        y=0;
+    }
+    if(y>0) x+=y;
+    if(x>=a)
+    {
+        cnt+=a;
+        x-=a;
+    }
+    else
+    {
+        cnt+=x;
+        x=0;
+    }
+    cout<<cnt<<'\n';
+
 }
 
 int32_t main()

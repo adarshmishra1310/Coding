@@ -7,29 +7,35 @@ using namespace std;
 
 void runCase(int &testcase)
 {
-    int n,k;
-    cin>>n>>k;
-    vector<int> v(n);
-    for(int i=0;i<n;i++) cin>>v[i];
-    map<int,int> mpp;
-    for(int i=0;i<n;i++) mpp[v[i]]++;
-    int ans=0;
-    for(int i=0;i<n;i++)
+    int n,c;
+    cin>>n>>c;
+    string s;
+    cin>>s;
+    map<char,int> mpp;
+    for(int i=0;i<n;i++) mpp[s[i]]++;
+    vector<int> v;
+    for(auto &x:mpp) v.push_back(x.second);
+    sort(v.begin(),v.end());
+    int sz=v.size(),cnt=0,temp=1;
+    for(int i=0;i<sz;i++)
     {
-        if(mpp.find(v[i])!=mpp.end())
+        // cout<<v[i]<<' ';
+        if(temp<=c)
         {
-            mpp[v[i]]--;
-			if(mpp[v[i]]==0) mpp.erase(v[i]);
-			if(mpp.find(k-v[i])!=mpp.end()) 
-			{
-				mpp[k-v[i]]--;
-				if(mpp[k-v[i]]==0) mpp.erase(k-v[i]);
-				// cout<<v[i]<<' '<<k-v[i]<<'\n';
-				ans++;
-			}
+            int t=0;
+            while(v[i]!=0 && temp<=c)
+            {
+                v[i]--;
+                t+=temp;
+                temp++;
+            }
+            if(t>c || v[i]!=0) cnt+=c;
+            else cnt+=t;
+            // cout<<cnt<<' '<<temp<<'\n';
         }
+        else if(v[i]!=0) cnt+=c;
     }
-    cout<<ans<<'\n';
+    cout<<cnt<<'\n';
 }
 
 int32_t main()

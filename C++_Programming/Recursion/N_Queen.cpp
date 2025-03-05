@@ -3,12 +3,14 @@ using namespace std;
 
 // vector<vector<string>> temp;
 
-void solve(int n, int i, int ans[])
+void solve(int n, int i, int ans[], int* cnt)
 {
     if (i == n)
     {
-        for(int i=0;i<n;i++) cout << ans[i] << " ";
+        cout<<"Solution "<<*cnt + 1<<": ";
+        for(int i=0;i<n;i++) cout <<ans[i] + 1 << " ";
         cout << "\n";
+        *cnt=*cnt+1;
         // vector<string> ss(n);
         // for (int k = 0; k < n; k++)
         // {
@@ -38,7 +40,7 @@ void solve(int n, int i, int ans[])
         if (flag)
         {
             ans[i] = j;
-            solve(n, i + 1, ans);
+            solve(n, i + 1, ans, cnt);
             ans[i] = -1;
         }
     }
@@ -48,8 +50,9 @@ void solve(int n, int i, int ans[])
 void solveNQueens(int n)
 {
     int ans[n];
+    int cnt=0;
     for(int i=0;i<n;i++) ans[i]=-1;
-    solve(n, 0, ans);
+    solve(n, 0, ans,&cnt);
     // return temp;
 }
 

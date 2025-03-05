@@ -7,7 +7,33 @@ using namespace std;
 
 void runCase(int &testcase)
 {
-    
+    int n;
+    cin>>n;
+    string a,b;
+    cin>>a>>b;
+    int c0=0,c1=0;
+    for(int i=0;i<n;i++)
+    {
+        if(a[i]=='0' && a[i]==b[i]) c0++;
+        else if(a[i]=='1' && a[i]==b[i]) c1++;
+    }
+    if(n%2==0)
+    {
+        if(c0%2!=0 || c1%2!=0)
+        {
+            cout<<"NO\n";
+            return;
+        }
+    }
+    else
+    {
+        if((c0%2!=0 && c1%2!=0))
+        {
+            cout<<"NO\n";
+            return;
+        }
+    }
+    cout<<"YES\n";
 }
 
 int32_t main()
