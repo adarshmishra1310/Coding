@@ -7,43 +7,48 @@ using namespace std;
 
 void runCase(int &testcase)
 {
-    int x,y,z,a,b,c;
-    cin>>x>>y>>z>>a>>b>>c;
+    int x,y,k;
+    cin>>x>>y>>k;
+    if(y>x) swap(x,y);
     int cnt=0;
-    if(z>=c)
+    if(abs(x-y)==k)
     {
-        cnt+=c;
-        z-=c;
+        cout<<cnt<<'\n';
+        return;
     }
-    else
+    while(abs(x-y)<k)
     {
-        cnt+=z;
-        z=0;
+        x++;
+        y--;
+        cnt++;
+        if(abs(x-y)==k)
+        {
+            cout<<cnt<<'\n';
+            return;
+        }
+        else if(abs(x-y)>k) 
+        {
+            cout<<-1<<'\n';
+            return;
+        }
     }
-    if(z>0) y+=z;
-    if(y>=b)
+    while(abs(x-y)>k)
     {
-        cnt+=b;
-        y-=b;
+        x--;
+        y++;
+        cnt++;
+        if(abs(x-y)==k)
+        {
+            cout<<cnt<<'\n';
+            return;
+        }
+        else if(abs(x-y)<k) 
+        {
+            cout<<-1<<'\n';
+            return;
+        }
     }
-    else
-    {
-        cnt+=y;
-        y=0;
-    }
-    if(y>0) x+=y;
-    if(x>=a)
-    {
-        cnt+=a;
-        x-=a;
-    }
-    else
-    {
-        cnt+=x;
-        x=0;
-    }
-    cout<<cnt<<'\n';
-
+    cout<<-1<<'\n';
 }
 
 int32_t main()

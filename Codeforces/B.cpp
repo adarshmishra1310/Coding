@@ -7,35 +7,34 @@ using namespace std;
 
 void runCase(int &testcase)
 {
-    int n,c;
-    cin>>n>>c;
-    string s;
-    cin>>s;
-    map<char,int> mpp;
-    for(int i=0;i<n;i++) mpp[s[i]]++;
-    vector<int> v;
-    for(auto &x:mpp) v.push_back(x.second);
-    sort(v.begin(),v.end());
-    int sz=v.size(),cnt=0,temp=1;
-    for(int i=0;i<sz;i++)
+    int n;
+    cin>>n;
+    vector<int> x(n),y(n);
+    for(int i=0;i<n;i++) cin>>x[i];
+    for(int i=0;i<n;i++) cin>>y[i];
+    // map<int,int> mpp;
+    int p=y[0];
+    vector<pair<int,int>> temp;
+    for(int i=0;i<n;i++)
     {
-        // cout<<v[i]<<' ';
-        int t=0;
-        if(temp<=c)
-        {
-            while(v[i]!=0 && temp<=c)
-            {
-                v[i]--;
-                t+=temp;
-                temp++;
-            }
-            if(v[i]!=0) cnt+=c;
-            else cnt+=t;
-            // cout<<temp<<'\n';
-        }
-        else if(v[i]!=0) cnt+=c;
+        temp.push_back({abs(x[i]-p),x[i]});
     }
-    cout<<cnt<<'\n';
+    sort(temp.begin(),temp.end());
+    for(int i=0;i<n;i++)
+    {
+        if(temp[i].second!=y[i])
+        {
+            cout<<-1<<'\n';
+            return;
+        }
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(x[i]==p){
+            cout<<i+1<<'\n';
+            return;
+        }
+    }
 }
 
 int32_t main()
