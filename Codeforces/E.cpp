@@ -7,7 +7,11 @@ using namespace std;
 
 void runCase(int &testcase)
 {
-    
+    // logic
+    // make a pair of multiset or vector where elements are {v[i]%k,i}. 
+    // run a loop
+    // find {k-(v[i]%k),-1} ka lower bound in multiset. check if element is present or not
+    // if it present then map that element with v[i] and erase these from multiset
 }
 
 int32_t main()

@@ -1,68 +1,79 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
 
-//const int inf = (int)1e18;
-//const int mod = 1e9 + 7;
+int sz = 0, maxsz = 1;
+int *hp = (int *)malloc(maxsz * sizeof(int));
 
-void runCase(int &testcase)
+bool op(int a, int b)
 {
-    int x,y,k;
-    cin>>x>>y>>k;
-    if(y>x) swap(x,y);
-    int cnt=0;
-    if(abs(x-y)==k)
-    {
-        cout<<cnt<<'\n';
-        return;
-    }
-    while(abs(x-y)<k)
-    {
-        x++;
-        y--;
-        cnt++;
-        if(abs(x-y)==k)
-        {
-            cout<<cnt<<'\n';
-            return;
-        }
-        else if(abs(x-y)>k) 
-        {
-            cout<<-1<<'\n';
-            return;
-        }
-    }
-    while(abs(x-y)>k)
-    {
-        x--;
-        y++;
-        cnt++;
-        if(abs(x-y)==k)
-        {
-            cout<<cnt<<'\n';
-            return;
-        }
-        else if(abs(x-y)<k) 
-        {
-            cout<<-1<<'\n';
-            return;
-        }
-    }
-    cout<<-1<<'\n';
+    if (a >= b)
+        return true;
+    else
+        return false;
 }
 
-int32_t main()
+void insert(int x)
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int tests = 1;
-    cin >> tests;
-
-    for (int i = 1; i <= tests; i++)
+    hp = (int *)realloc(hp, (sz + 1) * sizeof(int));
+    int idx = sz;
+    hp[idx] = x;
+    while (idx > 0)
     {
-        // cout << "Case #" << i << ": \n";
-        runCase(i);
+        int parent = (idx - 1) / 2;
+        if (op(hp[idx], hp[parent]))
+            swap(hp[idx], hp[parent]);
+        else
+            break;
+        idx = parent;
     }
+    sz++;
+    maxsz++;
+}
+
+void del()
+{
+    sz--;
+    hp[0] = hp[sz];
+    int temp = 0;
+    while (temp < sz)
+    {
+        int id = temp;
+        if (op(hp[2 * temp], hp[0]) && op(hp[2 * temp + 1], hp[0]))
+            if (op(hp[2 * temp], hp[2 * temp + 1]))
+                temp = 2 * temp;
+            else
+                temp = 2 * temp + 1;
+        else if (op(hp[2 * temp], hp[0]))
+            temp = 2 * temp;
+        else if (op(hp[2 * temp + 1], hp[0]))
+            temp = 2 * temp + 1;
+        else
+            break;
+    }
+    swap(hp[temp], hp[0]);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    int v[n];
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+    insert(5);
+    // for (int i = 0; i < sz; i++)
+    // {
+    //     cout << hp[i] << ' ';
+    // }
+    insert(10);
+    insert(7);
+    insert(2);
+    del();
+    del();
+    for (int i = 0; i < sz; i++)
+    {
+        cout << hp[i] << ' ';
+    }
+    cout << '\n';
     return 0;
 }

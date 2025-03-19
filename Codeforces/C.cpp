@@ -1,59 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
 
-//const int inf = (int)1e18;
-//const int mod = 1e9 + 7;
+int sz = 0;
+int *hp = (int *)malloc(sz * sizeof(int));
 
-void runCase(int &testcase)
+bool op(int a, int b)
 {
-    int n;
-    cin>>n;
-    string a,b;
-    cin>>a>>b;
-    vector<vector<int>> temp;
-    for(int i=0;i<n;i++)
+    return (a >= b);
+}
+
+void insert(int x)
+{
+    sz++;
+    hp = (int *)realloc(hp, sz * sizeof(int));
+    hp[sz - 1] = x;
+    int i = sz - 1;
+    while (i > 0 && op(hp[i], hp[(i - 1) / 2]))
     {
-        if(a[i]!=b[i])
-        {
-            if((i<n-1) && (a[i]!=a[i+1]) && (a[i+1]!=b[i+1]))
-            {
-                // cout<<2<<' '<<i+1<<' '<<i+2<<'\n';
-                temp.push_back({2,i+1,i+2});
-                i++;
-            }
-            else if((i<n-1) && (a[i]==a[i+1]) && (a[i+1]!=b[i+1]))
-            {
-                // cout<<1<<' '<<i+1<<' '<<i+2<<'\n';
-                temp.push_back({1,i+1,i+2});
-                i++;
-            }
-            else
-            {
-                // cout<<1<<' '<<(i+1)<<' '<<(i+1)<<'\n';
-                temp.push_back({1,i+1,i+1});
-            }
-        }
-    }
-    cout<<temp.size()<<'\n';
-    for(auto &x:temp)
-    {
-        cout<<x[0]<<' '<<x[1]<<' '<<x[2]<<'\n';
+        swap(hp[i], hp[(i - 1) / 2]);
+        i = (i - 1) / 2;
     }
 }
 
-int32_t main()
+int del()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int tests = 1;
-    cin >> tests;
-
-    for (int i = 1; i <= tests; i++)
+    int ans = hp[0];
+    swap(hp[0], hp[sz - 1]);
+    sz--;
+    int i = 0;
+    while (2 * i + 1 < sz)
     {
-        // cout << "Case #" << i << ": \n";
-        runCase(i);
+        int j = 2 * i + 1;
+        if (2 * i + 2 < sz && op(hp[2 * i + 2], hp[j])) j = 2 * i + 2;
+        if (op(hp[i], hp[j])) break;
+        swap(hp[i], hp[j]);
+        i = j;
     }
+    return ans;
+}
+
+int main()
+{
+    insert(5);
+    insert(10);
+    insert(7);
+    insert(2);
+    for(int i=0;i<sz;i++) cout<<hp[i]<<' ';
+    cout<<'\n';
     return 0;
 }

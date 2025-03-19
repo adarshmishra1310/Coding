@@ -7,7 +7,28 @@ using namespace std;
 
 void runCase(int &testcase)
 {
-    
+    int n,k;
+    cin>>n>>k;
+    vector<int> v(n);
+    for(int i=0;i<n;i++) cin>>v[i];
+    int ans=0;
+    if(k==1)
+    {
+        int e2=0;
+        for(int i=1;i<n-1;i++) e2=max(v[i],e2); 
+        ans=max(ans,e2+max(v[0],v[n-1]));
+        ans=max(ans,v[0]+v[n-1]);
+        cout<<ans<<'\n';
+        return;
+    }
+    sort(v.begin(),v.end());
+    while((k+1)>0)
+    {
+        ans+=v.back();
+        v.pop_back();
+        k--;
+    }
+    cout<<ans<<'\n';
 }
 
 int32_t main()

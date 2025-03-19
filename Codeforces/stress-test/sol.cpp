@@ -2,75 +2,65 @@
 using namespace std;
 #define int long long
 
-const int inf = (int)1e18;
-// const int mod = 1e9 + 7;
-
-bool solve(int x, int y, int a, int rr)
-{
-    return ((x - a) * (x - a) + y * y) <= (rr * rr);
-}
+//const int inf = (int)1e18;
+//const int mod = 1e9 + 7;
 
 void runCase(int &testcase)
 {
-    int n, m;
-    cin >> n >> m;
-    vector<int> x(n), r(n);
-    for (int i = 0; i < n; i++)
-        cin >> x[i];
-    for (int i = 0; i < n; i++)
-        cin >> r[i];
-    vector<pair<int, int>> temp;
-    for (int i = 0; i < n; i++)
-        temp.push_back({x[i], r[i]});
-    sort(temp.begin(), temp.end());
-    multiset<pair<int,int>> ss;
-    for (int i = 0; i < n; i++)
+    int n;
+    cin>>n;
+    vector<int> v(n);
+    for(int i=0;i<n;i++) cin>>v[i];
+    string a,b;
+    a=b="1";  
+    int pd=INT_MIN;  
+    for(int i=1;i<n;i++)
     {
-        x[i] = temp[i].first;
-        r[i] = temp[i].second;
+        if(a.back()=='0') 
+        {
+            a+='0';
+            continue;
+        }
+        if(v[i]>v[i-1] && (v[i]-v[i-1])>=pd+(n-3))
+        {
+            a+='1';
+        }
+        else a+='0';
+        pd=v[i]-v[i-1];
     }
-    vector<int> lf(2 * n + 1);
-    int mx = n - 1;
-    for (int i = n - 2; i >= 0; i--)
+    pd=INT_MAX;
+    for(int i=n-2;i>=0;i--)
     {
-        lf[i] = mx;
-        if ((x[i] - r[i]) < (x[mx] - r[mx]))
+        if(*b.begin()=='0') 
         {
-            mx = i;
+            b='0'+b;
+            continue;
         }
-        else if((x[i] - r[i]) <= (x[mx] - r[mx]))
+        if(v[i]<v[i+1] && ((v[i+1]-v[i])<=pd-(n-3)))
         {
-            if(r[i]>=r[mx])
-            {
-                mx=i;
-            }
+            b='1'+b;
         }
+        else b='0'+b;
+        pd=v[i+1]-v[i];
     }
-    int cnt = 0, flag = 0;
-    for (int i = 0; i < n; i++)
+    // cout<<a<<' '<<b<<'\n';
+    string temp="";
+    if(b[1]=='1') temp+='1';
+    else temp+='0';
+    for(int i=1;i<n-1;i++)
     {
-        for (int j = -1 * r[i]; j <= r[i]; j++)
+        if(i>=2) pd=v[i-1]-v[i-2];
+        else pd=INT_MIN;
+        if(a[i-1]=='1' && b[i+1]=='1' && (v[i-1]<v[i+1] && (v[i+1]-v[i-1])>=pd+(n-3)))
         {
-            int temp = (int)sqrt((r[i] * r[i]) - (j * j));
-            for (int k = temp; k >= -1 * temp; k--)
-            {
-                if ((i < n - 1) && solve(x[i] + j, k, x[lf[i]], r[lf[i]]))
-                {
-                    continue;
-                }
-                // if((x[i]+j)==1 && k==2)
-                // {
-                //     // cout<<lf[i]<<' ';
-                //     // cout<<i<<"H\n";
-                // }
-                // cout<<x[i]+j<<' '<<k<<'\n';
-                // ss.insert({x[i]+j,k});
-                cnt++;
-            }
+            if(i<n-2 && (v[i+2]-v[i+1])<(v[i+1]-v[i-1]+(n-3))) temp+='0';
+            else temp+='1';
         }
+        else temp+='0';
     }
-    // for(auto &x:ss) cout<<x.first<<' '<<x.second<<'\n';
-    cout << cnt << '\n';
+    if(a[n-2]=='1') temp+='1';
+    else temp+='0';
+    cout<<temp<<'\n';
 }
 
 int32_t main()
