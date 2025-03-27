@@ -33,7 +33,7 @@ vector<int> dijkstra(vector<pair<int, int>> adj[], int N, int source, vector<boo
             if (dist[v] + wt < dist[child_v]) // Relax
             {
                 dist[child_v] = dist[v] + wt;
-                // parent[child_v] = v; // Set the parent node
+                parent[child_v] = v; // Set the parent node
                 st.insert({dist[child_v], child_v});
             }
         }
@@ -63,7 +63,8 @@ vector<int> getPath(int source, int destination, vector<int> &parent)
 int main()
 {
     int n, m;
-    vector<pair<int, int>> adj[N]; //{node,weight}
+    cin >> n >> m;
+    vector<pair<int, int>> adj[n]; //{node,weight}
     for (int i = 0; i < n; i++)
     {
         int x, y, wt;

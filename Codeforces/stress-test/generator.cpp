@@ -41,7 +41,7 @@ void runCase(int &testCase)
     // cout<<'\n';
     // int x = rnd(1, 100000000000000000);
     // cout << x << " ";
-    int n = rnd(2, 5);
+    int n = rnd(2, 10);
     // while(n%2!=0) n=rnd(2,10);
     cout << n << "\n";
     // for(int i=0;i<n;i++)
@@ -60,12 +60,12 @@ void runCase(int &testCase)
         ans.push_back(rnd(1, 10));
         cout << ans[i] << ' ';
     }
-    // cout << '\n';
-    // vector<int> ans2;
+    cout << '\n';
+    // vector<char> ans2;
     // for (int i = 0; i < n; i++)
     // {
-    //     ans2.push_back(rnd(1, 3));
-    //     cout << ans2[i] << ' ';
+    //     ans2.push_back((char)(rnd(0,1)+'0'));
+    //     cout << ans2[i];
     // }
     // cout<<'\n';
     // unordered_set<int> ss;

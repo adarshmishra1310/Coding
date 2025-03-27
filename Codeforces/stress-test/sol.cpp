@@ -1,9 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
+// #define int long long
 
 //const int inf = (int)1e18;
 //const int mod = 1e9 + 7;
+
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+template <class T>
+using _set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+// X.find_by_order(k) return iterator of kth element. 0 indexed.
+// X.order_of_key(k) returns count of elements strictly less than k.
+template <typename T>
+using _multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class key, class value, class cmp = std::less<key>>
+using _map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_node_update>;
 
 void runCase(int &testcase)
 {
@@ -11,56 +22,54 @@ void runCase(int &testcase)
     cin>>n;
     vector<int> v(n);
     for(int i=0;i<n;i++) cin>>v[i];
-    string a,b;
-    a=b="1";  
-    int pd=INT_MIN;  
-    for(int i=1;i<n;i++)
+    _multiset<int> a,b;
+    int id=-1;
+    map<int,int> mpp;
+    // for(int i=0;i<n;i++) 
+    // {
+    //     if(mpp.find(v[i])!=mpp.end()) break;
+    //     mpp[v[i]]++;
+    //     id++;
+    // }
+    for(int i=0;i<n;i++)
     {
-        if(a.back()=='0') 
+        while((id+1<n) && mpp.find(v[id+1])==mpp.end())
         {
-            a+='0';
-            continue;
+            mpp[v[id+1]]++;
+            id++;
         }
-        if(v[i]>v[i-1] && (v[i]-v[i-1])>=pd+(n-3))
-        {
-            a+='1';
-        }
-        else a+='0';
-        pd=v[i]-v[i-1];
+        a.insert(id);
+        mpp[v[i]]--;
+        if(mpp[v[i]]==0) mpp.erase(v[i]);
     }
-    pd=INT_MAX;
-    for(int i=n-2;i>=0;i--)
+    mpp.clear();
+    // cout<<'\n';
+    id=n;
+    for(int i=n-1;i>=0;i--)
     {
-        if(*b.begin()=='0') 
+        while((id-1>=0) && mpp.find(v[id-1])==mpp.end())
         {
-            b='0'+b;
-            continue;
+            mpp[v[id-1]]++;
+            id--;
         }
-        if(v[i]<v[i+1] && ((v[i+1]-v[i])<=pd-(n-3)))
-        {
-            b='1'+b;
-        }
-        else b='0'+b;
-        pd=v[i+1]-v[i];
+        b.insert(id);
+        mpp[v[i]]--;
+        if(mpp[v[i]]==0) mpp.erase(v[i]);
     }
-    // cout<<a<<' '<<b<<'\n';
-    string temp="";
-    if(b[1]=='1') temp+='1';
-    else temp+='0';
-    for(int i=1;i<n-1;i++)
+    vector<int> bb;
+    for(auto &x:b)
     {
-        if(i>=2) pd=v[i-1]-v[i-2];
-        else pd=INT_MIN;
-        if(a[i-1]=='1' && b[i+1]=='1' && (v[i-1]<v[i+1] && (v[i+1]-v[i-1])>=pd+(n-3)))
-        {
-            if(i<n-2 && (v[i+2]-v[i+1])<(v[i+1]-v[i-1]+(n-3))) temp+='0';
-            else temp+='1';
-        }
-        else temp+='0';
+        bb.push_back(x);
     }
-    if(a[n-2]=='1') temp+='1';
-    else temp+='0';
-    cout<<temp<<'\n';
+    long long cnt=0,i=0;
+    for(auto &x:a)
+    {
+        cnt+=max(0LL,(long long)b.order_of_key(x+1)-i-1);
+        i++;
+        // cout<<cnt<<' ';
+    }
+    cout<<cnt<<'\n';
+
 }
 
 int32_t main()

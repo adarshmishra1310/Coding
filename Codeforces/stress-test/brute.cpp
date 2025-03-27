@@ -1,43 +1,84 @@
-#include <iostream>
-#include <vector>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define mod 998244353
+#define no cout << "NO\n"
 
-bool isSmooth(const vector<long long>& a) {
-    if(a.size() <= 1) return true;
-    for (int i = 0; i < a.size()-1; i++)
-        if(a[i] >= a[i+1]) return false;
-    vector<long long> d;
-    for (int i = 0; i < a.size()-1; i++)
-        d.push_back(a[i+1] - a[i]);
-    return isSmooth(d);
+void solve()
+{
+  int n;
+  cin >> n;
+  string str;
+  cin >> str;
+  int ans = 1;
+  for (int i = 0; i <= (n-1)/2; i++)
+  {
+    if (str[i] == str[n-i-1])
+      ans = 0;
+  }
+  if (ans)
+  {
+    cout << 0 << endl;
+    return;
+  }
+  if(n % 2 !=0) {
+    cout<<"-1"<<endl;
+    return;
+  }
+  ans=1;
+  
+
+  string s(2000, 4);
+
+  int count = 0 , l= 1000 , r=1000+n-1; // l=0,r=n-1;
+
+  for(int i=0;i<n;i++){
+    s[i+1000]=str[i];
+  }
+
+  int rl=1000,rr=r;
+  vector<int>res;
+  while (count <= 300 && l<=r){
+    if (s[l]=='0' && s[r]=='1') {
+      l++,r--;
+    }
+    else if (s[l]=='1' && s[r]=='0'){
+      l++,r--;
+    }
+    else if(s[l]=='0' && s[r]=='0'){
+      l++;
+      r++;
+      s[r]='0';
+      s[r+1]='1';
+      res.push_back(r-rl);
+      rr+=2;
+      count++;
+    }
+    else if (s[l]=='1' && s[r]=='1'){
+          res.push_back(l-rl);
+      r--;
+      l--;
+      s[l]='1';
+      s[l-1]='0';
+      rl-=2;
+      count++;
+    }
+  }
+  if(count <=300){
+    cout<<count <<endl;
+    for(int i=0;i<res.size();i++) cout<<res[i]<<" ";
+    cout<<endl;
+  }else cout<<"-1"<<endl;
+  return;
 }
 
-int main(){
-    int T;
-    cin >> T;
-    while(T--){
-        int n;
-        cin >> n;
-        vector<long long> A(n);
-        for(int i = 0; i < n; i++)
-            cin >> A[i];
-        if(n>32) 
-        {
-            for(int i=0;i<n;i++) cout<<'0';
-            cout<<'\n';
-            return;
-        }
-        string ans(n, '0');
-        for(int i = 0; i < n; i++){
-            vector<long long> B;
-            for(int j = 0; j < n; j++){
-                if(j == i) continue;
-                B.push_back(A[j]);
-            }
-            ans[i] = isSmooth(B) ? '1' : '0';
-        }
-        cout << ans << "\n";
-    }
-    return 0;
+int main()
+{
+  ll t;
+  cin >> t;
+  while (t--)
+  {
+    solve();
+  }
+  return 0;
 }
