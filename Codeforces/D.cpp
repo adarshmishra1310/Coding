@@ -1,73 +1,72 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
+// #define int long long
 
 //const int inf = (int)1e18;
 //const int mod = 1e9 + 7;
 
-// bool check(int mid,int x,int y,vector<int> &v)
-// {
-
-// }
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+template <class T>
+using _set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+// X.find_by_order(k) return iterator of kth element. 0 indexed.
+// X.order_of_key(k) returns count of elements strictly less than k.
+template <typename T>
+using _multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class key, class value, class cmp = std::less<key>>
+using _map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_node_update>;
 
 void runCase(int &testcase)
 {
-    int n;
-    cin>>n;
+    int n,k;
+    cin>>n>>k;
     vector<int> v(n);
     for(int i=0;i<n;i++) cin>>v[i];
-    sort(v.begin(),v.end());
-    int sum=accumulate(v.begin(),v.end(),0LL);
-    int q;
-    cin>>q;
-    while(q--)
+    int sz=n/k;
+    int l=0,r=10,ans=0;
+    _set<int> ss;
+    set<int> st;
+    while(l<=r)
     {
-        int x,y;
-        cin>>x>>y;
-        auto it=lower_bound(v.begin(),v.end(),x);
-        if(it==v.end())
+        int mid=(l+r)/2;
+        cout<<mid<<' ';
+        int cnt=0;
+        for(int i=0;i<n;i++)
         {
-            cout<<min(max(0ll,x-v[n-1])+max(0ll,y-sum+v[n-1]),max(0ll,x-v[0])+max(0ll,y-sum+v[0]))<<'\n';
-            // int ans=INT_MAX;
-            // for(int i=0;i<n;i++)
+            ss.insert(v[i]);
+            st.insert(v[i]);
+            // if(mid==0)
             // {
-            //     ans=min(ans,max(0ll,x-v[i])+max(0ll,y-sum+v[i]));
+            //     if(st.find(0)!=st.end())
+            //     {
+            //         ss.clear();
+            //         st.clear();
+            //         cnt++;
+            //     }
             // }
-            // cout<<ans<<'\n';
+            // else if(st.find(mid-1)!=st.end())
+            // {
+                int temp=ss.order_of_key(mid);
+                if(temp==mid-1)
+                {
+                    ss.clear();
+                    st.clear();
+                    cnt++;
+                }
+            // }
+        }
+        cout<<cnt<<'\n';
+        if(cnt<k)
+        {
+            r=mid-1;
         }
         else
         {
-            // int ans=INT_MAX,ind=0;
-            // for(int i=0;i<n;i++)
-            // {
-            //     if(ans>max(0ll,x-v[i])+max(0ll,y-sum+v[i])) ind=i;
-            //     ans=min(ans,max(0ll,x-v[i])+max(0ll,y-sum+v[i]));
-            //     cout<<max(0ll,x-v[i])+max(0ll,y-sum+v[i])<<' ';
-            // }
-            // cout<<ans<<' '<<ind<<'\n';
-            int id=it-v.begin();
-            auto it2=lower_bound(v.begin(),v.end(),x);
-            int tt=n-1;
-            if(it2!=v.begin()) 
-            {
-                it2--;
-                tt=it2-v.begin();
-            }
-            // // cout<<id<< ' ';
-            cout<<min({max(0ll,x-v[id])+max(0ll,y-sum+v[id]),max(0ll,x-v[0])+max(0ll,y-sum+v[0]),max(0ll,x-v[tt])+max(0ll,y-sum+v[tt])})<<'\n';
-            // cout<<min(x-)
+            ans=mid;
+            l=mid+1;
         }
-        // int l=0,r=n-1,ans=INT_MAX;
-        // while(l<=r)
-        // {
-        //     int mid=(l+r)/2;
-        //     int temp=max(0ll,x-v[mid])+max(0ll,y-sum+v[mid]);
-        //     if(temp<ans)
-        //     {
-
-        //     }
-        // }
     }
+    cout<<ans<<'\n';
 }
 
 int32_t main()

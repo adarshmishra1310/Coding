@@ -1,18 +1,7 @@
-DFS traversal starting from vertex 0:
-Visited 0
-Visited 2
-Visited 4
-Visited 3
-Visited 1
-
-BFS traversal starting from vertex 0:
-Visited 0
-Visited 2
-Visited 1
-Visited 4
-Visited 3
-Distance from 0 to 0: 0
-Distance from 0 to 1: 7
-Distance from 0 to 2: 3
-Distance from 0 to 3: 9
-Distance from 0 to 4: 5
+1
+5
+3
+1
+0
+1
+0

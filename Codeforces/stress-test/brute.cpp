@@ -1,84 +1,60 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define mod 998244353
-#define no cout << "NO\n"
+#define int long long
 
-void solve()
+//const int inf = (int)1e18;
+//const int mod = 1e9 + 7;
+
+void runCase(int &testcase)
 {
-  int n;
-  cin >> n;
-  string str;
-  cin >> str;
-  int ans = 1;
-  for (int i = 0; i <= (n-1)/2; i++)
-  {
-    if (str[i] == str[n-i-1])
-      ans = 0;
-  }
-  if (ans)
-  {
-    cout << 0 << endl;
-    return;
-  }
-  if(n % 2 !=0) {
-    cout<<"-1"<<endl;
-    return;
-  }
-  ans=1;
-  
-
-  string s(2000, 4);
-
-  int count = 0 , l= 1000 , r=1000+n-1; // l=0,r=n-1;
-
-  for(int i=0;i<n;i++){
-    s[i+1000]=str[i];
-  }
-
-  int rl=1000,rr=r;
-  vector<int>res;
-  while (count <= 300 && l<=r){
-    if (s[l]=='0' && s[r]=='1') {
-      l++,r--;
+    int n,k;
+    cin>>n>>k;
+    vector<int> v(n);
+    for(int i=0;i<n;i++) cin>>v[i];
+    int l=0,r=1e9,ans=0;
+    while(l<=r)
+    {
+        set<int> ss;
+        int mid=(l+r)/2;
+        int cnt=0;
+        // make mid as mex means all elements less than mid should be there
+        for(int i=0;i<n;i++)
+        {
+            if(v[i]<mid)
+            {
+                ss.insert(v[i]);
+            }
+            if(ss.size()==mid)
+            {
+                cnt++;
+                ss.clear();
+            }
+        }
+        if(cnt<k)
+        {
+            r=mid-1;
+        }
+        else
+        {
+            ans=mid;
+            l=mid+1;
+        }
     }
-    else if (s[l]=='1' && s[r]=='0'){
-      l++,r--;
-    }
-    else if(s[l]=='0' && s[r]=='0'){
-      l++;
-      r++;
-      s[r]='0';
-      s[r+1]='1';
-      res.push_back(r-rl);
-      rr+=2;
-      count++;
-    }
-    else if (s[l]=='1' && s[r]=='1'){
-          res.push_back(l-rl);
-      r--;
-      l--;
-      s[l]='1';
-      s[l-1]='0';
-      rl-=2;
-      count++;
-    }
-  }
-  if(count <=300){
-    cout<<count <<endl;
-    for(int i=0;i<res.size();i++) cout<<res[i]<<" ";
-    cout<<endl;
-  }else cout<<"-1"<<endl;
-  return;
+    cout<<ans<<'\n';
 }
 
-int main()
+int32_t main()
 {
-  ll t;
-  cin >> t;
-  while (t--)
-  {
-    solve();
-  }
-  return 0;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int tests = 1;
+    cin >> tests;
+
+    for (int i = 1; i <= tests; i++)
+    {
+        // cout << "Case #" << i << ": \n";
+        runCase(i);
+    }
+    return 0;
 }

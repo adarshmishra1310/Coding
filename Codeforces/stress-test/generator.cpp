@@ -41,7 +41,7 @@ void runCase(int &testCase)
     // cout<<'\n';
     // int x = rnd(1, 100000000000000000);
     // cout << x << " ";
-    int n = rnd(2, 10);
+    int n = rnd(1, 200000);
     // while(n%2!=0) n=rnd(2,10);
     cout << n << "\n";
     // for(int i=0;i<n;i++)
@@ -49,18 +49,24 @@ void runCase(int &testCase)
     //     cout<<(char)('0'+rnd(0,1));
     // }
     // cout<<'\n';
-    // int m = rnd(1, 10);
+    int m = rnd(1, n);
     // while(m>n) m=rnd(1,10);
-    // cout << m << "\n";
+    cout << m << "\n";
     // int y = rnd(1, 10);
     // cout << y << "\n";
     vector<int> ans;
     for (int i = 0; i < n; i++)
     {
-        ans.push_back(rnd(1, 10));
+        ans.push_back(rnd(0, 100000));
         cout << ans[i] << ' ';
     }
     cout << '\n';
+    // ans.clear();
+    // for(int i=0;i<m;i++)
+    // {
+    //     cout<<rnd(0,20)<<' ';
+    // }
+    // cout<<'\n';
     // vector<char> ans2;
     // for (int i = 0; i < n; i++)
     // {

@@ -1,75 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
-// #define int long long
+#define int long long
 
 //const int inf = (int)1e18;
 //const int mod = 1e9 + 7;
 
-#include <ext/pb_ds/assoc_container.hpp>
-using namespace __gnu_pbds;
-template <class T>
-using _set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-// X.find_by_order(k) return iterator of kth element. 0 indexed.
-// X.order_of_key(k) returns count of elements strictly less than k.
-template <typename T>
-using _multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
-template <class key, class value, class cmp = std::less<key>>
-using _map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_node_update>;
-
 void runCase(int &testcase)
 {
-    int n;
-    cin>>n;
+    int n,k;
+    cin>>n>>k;
     vector<int> v(n);
     for(int i=0;i<n;i++) cin>>v[i];
-    _multiset<int> a,b;
-    int id=-1;
-    map<int,int> mpp;
-    // for(int i=0;i<n;i++) 
-    // {
-    //     if(mpp.find(v[i])!=mpp.end()) break;
-    //     mpp[v[i]]++;
-    //     id++;
-    // }
-    for(int i=0;i<n;i++)
+    int l=0,r=n,ans=0;
+    while(l<=r)
     {
-        while((id+1<n) && mpp.find(v[id+1])==mpp.end())
+        set<int> ss;
+        int mid=(l+r)/2;
+        int cnt=0;
+        // make mid as mex means all elements less than mid should be there
+        for(int i=0;i<n;i++)
         {
-            mpp[v[id+1]]++;
-            id++;
+            if(v[i]<mid)
+            {
+                ss.insert(v[i]);
+            }
+            if(ss.size()==mid)
+            {
+                cnt++;
+                ss.clear();
+            }
         }
-        a.insert(id);
-        mpp[v[i]]--;
-        if(mpp[v[i]]==0) mpp.erase(v[i]);
-    }
-    mpp.clear();
-    // cout<<'\n';
-    id=n;
-    for(int i=n-1;i>=0;i--)
-    {
-        while((id-1>=0) && mpp.find(v[id-1])==mpp.end())
+        if(cnt<k)
         {
-            mpp[v[id-1]]++;
-            id--;
+            r=mid-1;
         }
-        b.insert(id);
-        mpp[v[i]]--;
-        if(mpp[v[i]]==0) mpp.erase(v[i]);
+        else
+        {
+            ans=mid;
+            l=mid+1;
+        }
     }
-    vector<int> bb;
-    for(auto &x:b)
-    {
-        bb.push_back(x);
-    }
-    long long cnt=0,i=0;
-    for(auto &x:a)
-    {
-        cnt+=max(0LL,(long long)b.order_of_key(x+1)-i-1);
-        i++;
-        // cout<<cnt<<' ';
-    }
-    cout<<cnt<<'\n';
-
+    cout<<ans<<'\n';
 }
 
 int32_t main()
