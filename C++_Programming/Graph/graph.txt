@@ -1,0 +1,18 @@
+DFS
+BFS
+0-1 BFS
+multisource BFS
+cycle detection in directed graph
+topological sort
+
+Shortest distance:-
+dijkstra
+bellman ford
+floyd worshall
+
+MST:-
+prims
+kruskal
+
+SCC:-
+kosaraju

@@ -36,7 +36,11 @@
 			"system_error": "cpp",
 			"chrono": "cpp",
 			"limits": "cpp",
-			"numeric": "cpp"
+			"numeric": "cpp",
+			"bitset": "cpp",
+			"utility": "cpp",
+			"istream": "cpp",
+			"thread": "cpp"
 		}
 	}
 }

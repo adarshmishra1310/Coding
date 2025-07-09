@@ -7,34 +7,29 @@ const int INF = 1e9 + 10;
 // TC -> O(V + E*log(V))
 // Doesn't works in case of -ve edges
 
-vector<int> dijkstra(vector<pair<int, int>> adj[], int N, int source, vector<bool> &vis, vector<int> &parent)
+vector<long long> dijkstra(vector<vector<pair<int, int>>>& adj, int N, int source, vector<int> &parent)
 {
-    vector<int> dist(N, INT_MAX);
+    vector<long long> dist(N, INT64_MAX);
 
-    set<pair<int, int>> st; // {weight , node}
+    priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> pq; // {weight , node}
 
-    st.insert({0, source});
+    pq.push({0, source});
     dist[source] = 0;
+    // parent.assign(N,-1);
 
-    while (st.size() > 0)
+    while (!pq.empty())
     {
-        auto node = *st.begin();
-        st.erase(st.begin());
-        int v = node.second;
-        int dis = node.first;
-        if (vis[v] == true)
+        auto [dis, v] = pq.top();
+        pq.pop();
+        if (dis > dist[v])
             continue;
-        else
-            vis[v] = true;
-        for (auto child : adj[v])
+        for (auto [child_v,wt] : adj[v])
         {
-            int child_v = child.first;
-            int wt = child.second;
             if (dist[v] + wt < dist[child_v]) // Relax
             {
                 dist[child_v] = dist[v] + wt;
-                parent[child_v] = v; // Set the parent node
-                st.insert({dist[child_v], child_v});
+                // parent[child_v] = v; // Set the parent node
+                pq.push({dist[child_v], child_v});
             }
         }
     }

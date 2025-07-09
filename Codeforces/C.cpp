@@ -2,49 +2,22 @@
 using namespace std;
 #define int long long
 
-//const int inf = (int)1e18;
-//const int mod = 1e9 + 7;
+const int inf = (int)1e18;
+const int mod = 1e9 + 7;
 
 void runCase(int &testcase)
 {
-    int n,q;
-    cin>>n>>q;
-    while(q--)
+    int n;
+    cin>>n;
+    vector<int> v(n);
+    for(int i=0;i<n;i++) cin>>v[i];
+    int ans=1;
+    for(int i=0;i<n-1;i++)
     {
-        char c,d;
-        cin>>c>>d;
-        if(c=='<')
-        {
-            int num;
-            cin>>num;
-            int tn=(1ll<<2*n),st=1;
-            int l=1,r=1;
-            while(true)
-            {
-                int cj=tn;
-                int j=tn/4,cnt=0;
-                int gl=0,g2=0;
-                while(1)
-                {
-                    st+=j;
-                    cnt++;
-                    if(st>num)
-                    {
-                        break;
-                    }
-                    if(cnt==1)
-                    {
-                        gl=l+tn/2;
-                    }
-                }
-            }
-        }
-        else
-        {
-            int x,y;
-            cin>>x>>y;
-        }
+        int elem=lcm(v[i],v[i+1])/v[i+1];
+        ans=lcm(ans,elem);
     }
+    cout<<ans<<'\n';
 }
 
 int32_t main()

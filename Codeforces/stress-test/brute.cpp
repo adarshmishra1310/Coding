@@ -1,60 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
+using ll = long long;
+int N, K;
+vector<ll> C;
+string A;
+ll best;
 
-//const int inf = (int)1e18;
-//const int mod = 1e9 + 7;
-
-void runCase(int &testcase)
-{
-    int n,k;
-    cin>>n>>k;
-    vector<int> v(n);
-    for(int i=0;i<n;i++) cin>>v[i];
-    int l=0,r=1e9,ans=0;
-    while(l<=r)
-    {
-        set<int> ss;
-        int mid=(l+r)/2;
-        int cnt=0;
-        // make mid as mex means all elements less than mid should be there
-        for(int i=0;i<n;i++)
-        {
-            if(v[i]<mid)
-            {
-                ss.insert(v[i]);
-            }
-            if(ss.size()==mid)
-            {
-                cnt++;
-                ss.clear();
-            }
-        }
-        if(cnt<k)
-        {
-            r=mid-1;
-        }
-        else
-        {
-            ans=mid;
-            l=mid+1;
-        }
+void dfs(int d, int disp, int sold, ll revenue) {
+    if (d == K) {
+        best = max(best, revenue);
+        return;
     }
-    cout<<ans<<'\n';
+    int rem = ((1<<N) - 1) & ~(disp | sold);
+    // try all subsets of rem to add
+    for (int add = 0; add < (1<<N); add++) {
+        if ((add & rem) != add) continue;
+        int new_disp = disp | add;
+        int live = new_disp & ~sold;
+        if (__builtin_popcount(live) < 2) continue;
+        int pick;
+        if (A[d] == '0') {
+            pick = __builtin_ctz(live);
+        } else {
+            pick = 31 - __builtin_clz(live);
+        }
+        dfs(d+1, new_disp, sold | (1<<pick), revenue + C[pick]);
+    }
 }
 
-int32_t main()
-{
+int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int tests = 1;
-    cin >> tests;
-
-    for (int i = 1; i <= tests; i++)
-    {
-        // cout << "Case #" << i << ": \n";
-        runCase(i);
+    int T; cin >> T;
+    const ll MOD = 1000000007;
+    while (T--){
+        cin >> N >> K;
+        C.resize(N);
+        for (int i = 0; i < N; i++) cin >> C[i];
+        cin >> A;
+        best = 0;
+        dfs(0, 0, 0, 0);
+        cout << (best % MOD) << "\n";
     }
     return 0;
 }

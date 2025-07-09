@@ -2,64 +2,12 @@
 using namespace std;
 #define int long long
 
-//const int inf = (int)1e18;
-//const int mod = 1e9 + 7;
+const int inf = (int)1e18;
+const int mod = 1e9 + 7;
 
-// https://codeforces.com/problemset/problem/1941/D
-
-void runCase()
+void runCase(int &testcase)
 {
-    int n,m,x,r;
-    cin>>n>>m>>x;
-    set<int> ss;
-    ss.insert(x);
-    char c;
-    while(m--)
-    {
-        cin>>r>>c;
-        if(c=='0')
-        {
-            vector<int> temp;
-            set<int> s1;
-            for(auto &it:ss)
-            {
-                temp.push_back(it);
-                s1.insert((it+r)%n);
-                // s1.insert((it-r+n)%n);
-            }
-            ss=s1;
-        }
-        else if(c=='1')
-        {
-            vector<int> temp;
-            set<int> s1;
-            for(auto &it:ss)
-            {
-                temp.push_back(it);
-                // s1.insert((it+r)%n);
-                s1.insert((it-r+n+1)%n);
-            }
-            ss=s1;
-        }
-        else
-        {
-            vector<int> temp;
-            set<int> s1;
-            for(auto &it:ss)
-            {
-                temp.push_back(it);
-                s1.insert((it+r)%n);
-                s1.insert((it-r+n+1)%n);
-            }
-            ss=s1;
-        }
-    }
-    cout<<ss.size()<<'\n';
-    for(auto &it:ss)
-    {
-        cout<<it<<' ';
-    }
-    cout<<'\n';
+    
 }
 
 int32_t main()
@@ -72,8 +20,8 @@ int32_t main()
 
     for (int i = 1; i <= tests; i++)
     {
-        // cout << "#Case " << i << ": \n";
-        runCase();
+        // cout << "Case #" << i << ": \n";
+        runCase(i);
     }
     return 0;
 }

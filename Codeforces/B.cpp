@@ -2,37 +2,29 @@
 using namespace std;
 #define int long long
 
-//const int inf = (int)1e18;
-//const int mod = 1e9 + 7;
+const int inf = (int)1e18;
+const int mod = 1e9 + 7;
 
 void runCase(int &testcase)
 {
-    int n,k;
-    cin>>n>>k;
-    if(n==1 && k==2)
+    int n;
+    cin>>n;
+    vector<int> v(n);
+    for(int i=0;i<n;i++) cin>>v[i];
+    int ans=INT_MAX;
+    int a=INT_MAX,b=INT_MAX;
+    ans=min(ans,v[0]+min(v[0],v[1]));
+    a=v[0];
+    b=max(v[0],v[1]);
+    int sum=v[0]+min(v[0],v[1]),mn=min(v[0],v[1]);
+    for(int i=2;i<n;i++)
     {
-        cout<<"YES\n";
-        return;
+        ans=min(ans,sum);
+        mn=min(mn,v[i]);
+        sum+=v[i];
     }
-    if(k>1)
-    {
-        cout<<"NO\n";
-        return;
-    }
-    if(n==1)
-    {
-        cout<<"NO\n";
-        return;
-    }
-    for(int i=2;i*i<=n;i++)
-    {
-        if(n%i==0)
-        {
-            cout<<"NO\n";
-            return;
-        }
-    }
-    cout<<"YES\n";
+    ans=min(ans,sum);
+    cout<<ans<<'\n';
 }
 
 int32_t main()

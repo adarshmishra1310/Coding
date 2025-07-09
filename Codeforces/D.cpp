@@ -2,8 +2,8 @@
 using namespace std;
 // #define int long long
 
-//const int inf = (int)1e18;
-//const int mod = 1e9 + 7;
+const int inf = (int)1e18;
+const int mod = 1e9 + 7;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
@@ -21,52 +21,35 @@ void runCase(int &testcase)
     int n,k;
     cin>>n>>k;
     vector<int> v(n);
-    for(int i=0;i<n;i++) cin>>v[i];
-    int sz=n/k;
-    int l=0,r=10,ans=0;
-    _set<int> ss;
-    set<int> st;
-    while(l<=r)
+    for(auto &x:v) cin>>x;
+    _multiset<int> ms;
+    for(int i=0;i<n;i++)
     {
-        int mid=(l+r)/2;
-        cout<<mid<<' ';
-        int cnt=0;
-        for(int i=0;i<n;i++)
+        ms.insert(v[i]);
+    }
+    int l=0,r=n-1;
+    while(l<r)
+    {
+        while(l<=r && v[l]==v[r]) 
         {
-            ss.insert(v[i]);
-            st.insert(v[i]);
-            // if(mid==0)
-            // {
-            //     if(st.find(0)!=st.end())
-            //     {
-            //         ss.clear();
-            //         st.clear();
-            //         cnt++;
-            //     }
-            // }
-            // else if(st.find(mid-1)!=st.end())
-            // {
-                int temp=ss.order_of_key(mid);
-                if(temp==mid-1)
-                {
-                    ss.clear();
-                    st.clear();
-                    cnt++;
-                }
-            // }
+            l++,r--;
         }
-        cout<<cnt<<'\n';
-        if(cnt<k)
+        if(l>=r) break;
+        int elem=max(v[l],v[r]);
+        if(ms.order_of_key(elem+1)>=k)
         {
-            r=mid-1;
+            if(v[l]==elem) l++;
+            else r--;
+            auto it=ms.upper_bound(elem);
+            ms.erase(it);
         }
         else
         {
-            ans=mid;
-            l=mid+1;
+            cout<<"NO\n";
+            return;
         }
     }
-    cout<<ans<<'\n';
+    cout<<"YES\n";
 }
 
 int32_t main()

@@ -44,7 +44,7 @@ int main()
         cin >> x >> y;
         x--, y--;
         adj[x].push_back(y);
-        adj[y].push_back(x);
+        // adj[y].push_back(x);
     }
 
     vector<int> parent(n);
@@ -71,7 +71,7 @@ int main()
                         cc = parent[cc];//cycle reconstruction
                         ll++;
                     }
-                    // cout << ll << " ";
+                    cout << ll << " ";
                     //   if(ll&1) val = 1;
                 }
             }
